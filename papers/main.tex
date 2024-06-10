@@ -2,10 +2,9 @@
 \pdfoutput=1
 % In particular, the hyperref package requires pdfLaTeX in order to break URLs across lines.
 
-\documentclass[11pt]{article}
+\documentclass[sigconf]{acmart}
 
-% Remove the "review" option to generate the final version.
-\usepackage[review]{style/acl}
+
 
 % Standard package includes
 \usepackage{times}
@@ -42,7 +41,7 @@
 \usepackage{graphicx}
 \usepackage{svg}
 
-\title{The Title of the Paper goes Here}
+\title{Cross-Lingual Clustering Using LLMs}
 
 % Author information can be set in various styles:
 % For several authors from the same institution:
@@ -60,22 +59,34 @@
 %         Author 2 \\ Address line \\ ... \\ Address line \And
 %         Author 3 \\ Address line \\ ... \\ Address line}
 
-\author{
-  Auth 1 \\
-  Affiliation 1 \\
-  Suburb 1 \\
-  Sate, Country \\ \And
-  Auth 2 \\
-  Affiliation 2 \\
-  Suburb 2 \\
-  Sate, Country \\
-  \texttt{email@email.com} \\\And
-  Auth 3 \\
-  Affiliation 3 \\
-  Suburb 3 \\
-  Sate, Country \\
-  \texttt{email@email.com} \\
-  }
+\author{Nicole R. Schneider}
+\affiliation{%
+  \institution{University of Maryland}
+  \streetaddress{P.O. Box 1212}
+  \city{College Park}
+  \state{MD}
+  \country{USA}
+}
+\email{nsch@umd.edu}
+
+\author{Avik Das}
+\affiliation{%
+  \institution{University of Maryland}
+  \city{College Park}
+  \state{Maryland}
+  \country{USA}
+}
+\email{adas1236@terpmail.umd.edu}
+
+\author{Hanan Samet}
+\affiliation{%
+  \institution{University of Maryland}
+  \streetaddress{P.O. Box 1212}
+  \city{College Park}
+  \state{MD}
+  \country{USA}
+}
+\email{hjs@umd.edu}
 
 \begin{document}
 
@@ -84,11 +95,13 @@
 %Load User-Defined Macros
 \input{macros/macros.tex}
 
-\maketitle
 \latexfile{00_abstract.tex}
+
+\maketitle
+
 \latexfile{10_introduction.tex}
-\latexfile{20_baselines.tex}
-\latexfile{30_experiment_design.tex}
+\latexfile{20_data.tex}
+\latexfile{30_method.tex}
 \latexfile{40_results.tex}
 \latexfile{50_related_work.tex}
 \latexfile{60_discussion_future_work.tex}
@@ -97,6 +110,7 @@
 \section*{Acknowledgements}
 
 % Print the bibliography entry
-\bibliography{bibliography/848Q_project.bib}
+\bibliographystyle{style/ACM-Reference-Format.bst}
+\bibliography{papers/bibliography/nlp_clustering}
 
 \end{document}

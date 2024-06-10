@@ -1,0 +1,45 @@
+\section{Data Source}\label{section:data}
+
+\begin{table*}[ht!]
+\begin{tabular}{ |p{3cm}||p{2.5cm}|p{1cm}|p{2cm}|p{2.5cm}||  }
+ \hline
+ \multicolumn{5}{|c|}{Language Rankings for Clusterability} \\
+ \hline
+ Original Language & ISO ALPHA 2 Code & Rank & \% Singletons & Num Documents\\
+ \hline
+ Haitian   & HT    & 1 & 54.28\% & 5944\\
+ Japanese &   JA  &  2 & 59.04\% & 4527\\
+ Arabic & AR & 3 & 78.93\% & 16196\\
+ German & DE & 4 & 79.49\% & 53673\\
+ Hindi &   HI  & 5 & 82.50\% & 21326\\
+ Chinese & ZH  & 6 & 82.53\% & 19965\\
+ Persian & FA & 8 & 88.4\% & 607\\
+ Spanish; Castilian & ES & 9 & 90.0\% & 2660\\
+ Portuguese & PT & 11 & 90.2\% & 3814\\
+ French & FR & 12 & 92.4\% & 4114\\
+ Hebrew & HE & 13 & 93.0\% & 3494\\
+ Italian & IT & 14 & 93.0\% & 16555\\
+ Dutch; Flemish & NL & 15 & 93.6\% & 3669\\
+ Greek, Modern & EL & 16 & 94.7\% & 757\\
+ Czech & CS & 17 & 95.2\% & 759\\
+ Russian & RU & 18 & 95.6\% & 5381\\
+ \hline
+\end{tabular}
+\caption{Language rankings by percent of documents clustering as singletons after translation into English, where lower rankings indicate a lower percentage of documents as singletons (better clustering). The rankings are depicted graphically in Figure \ref{figure:lang_cluster_chart}. Languages with fewer than 500 articles in NewsStand are ignored, leaving 17 languages in the dataset.}
+\label{table:cluster_score}
+\end{table*}
+
+To study the clustering behavior of cross-lingual text documents, we leverage NewsStand~\cite{Teit08}, a system designed to allow users to read the news using a map interface. The system ingests articles from thousands of RSS feeds within minutes of publication and presents them to users on a map, with each article's location inferred from its geographic references. 
+%This allows users to ask questions like "Where did X story happen?" (feature-based queries) and "What is going on at location Y?" (location-based queries) \cite{Teit08}. 
+The NewsStand interface is dynamic, so as new articles are published, markers are dynamically added to the map in real-time. 
+%The interface also allows users to pan and zoom in to narrow the focus to local news stories or zoom out to view globally relevant international news stories. 
+After assigning a location to each article, NewsStand aggregates the articles into clusters based on the textual content and locations referenced within the document. Critically, this enables articles to be ranked by story significance and displayed to users based on the map position and zoom level selected through the interface.
+
+
+\subsection{Preprocessing} \label{pipeline}
+The NewsStand dataset we use in this study is preprocessed as follows.
+Articles are first translated into English using MT (if they are not already in English) and sent through a series of steps to identify geographic terms in the article text or translation output. This occurs during the geotagging process, which consists of four stages: Entity Feature Extraction, Gazetteer Record Assignment, Geographic Name Disambiguation, and Geographic Focus Determination \cite{Teit08}. The first stage, Entity Feature Extraction, involves identifying important entities in the text and collecting them in an entity feature vector (EFV). This is accomplished using a combination of Part-Of-Speech (POS) tagging and statistical Named-Entity Recognition (NER) tagging \cite{NER}. 
+%The NER tagger is from the LingPipe toolkit \cite{baldwin_carpenter}, which was trained on the brown corpus \cite{brown} and additional news data. 
+For more details on this process, see \cite{Same09d, Lieb07, Ho12}. Once extracted, the EFV contains words belonging to proper noun classes like location, organization, and person. 
+%In Section \ref{proper nouns}, we discuss the relevance of these entity classes to the clustering behavior of translated text.
+Since location entities are particularly relevant for geotagging, those are marked as geographic features in the EFV and then assigned a set of matching locations during the Gazetteer Record Assignment stage, the toponyms are resolved during the Geographic Name Disambiguation phase \cite{Leid11, Lieb10b, Lieb11, Lieb12, Same14b, Schn21}, and a geographic focus is determined for each article.

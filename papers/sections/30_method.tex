@@ -1,0 +1,12 @@
+\section{Method}\label{section:method}
+
+\nrscomment{signpost}
+
+\subsection{Baseline Clustering}
+In the news domain, clustering is used to group together \emph{story clusters} containing all news articles that describe the same news event. In addition to the requirement that articles in the same cluster share many of the same keywords, they also must be published around the same timeframe. The temporal requirement stems from the emphasis on recency when presenting breaking stories to users. This premise lends itself well to online clustering, which requires less computation than one-shot approaches that involve re-clustering the entire corpus with every new article ingested~\cite{Teit08}.
+
+To accomplish the clustering, NewsStand employs the vector space model \cite{salton}, a common approach in text mining and information retrieval. The articles are converted to term feature vectors in d-dimensional space, where d is the number of distinct terms in every document in a corpus. The term feature vector is extracted using TF-IDF \cite{salton-buckley}. Elements of the term feature vector represent the frequency of their corresponding term in the document being ingested, where terms that are common in a document but uncommon in the corpus are emphasized. Since NewsStand is an online system with a dynamic corpus, the term feature vector is computed once for each article at the time it is ingested into the system.
+
+Clustering is also done in an online fashion using a variant of leader-follower clustering \cite{Duda73}. Articles are clustered across two dimensions: the term vector space and the temporal dimension. A term centroid and a time centroid are maintained for each cluster, representing the mean term feature vector and mean publication time of the articles in the cluster, respectively. For each new article ingested, clustering proceeds by checking if there exists a cluster with centroids less than a fixed cutoff distance from the article's term and time values. If so, the article is added to the nearest cluster and its centroids are updated, and if not, a new cluster is created containing only the new article. Term distances are computed using the standard cosine similarity \cite{steinbach}, and a Gaussian attenuator is applied to the temporal dimension to favor clusters with time centroids near the article's publication time.
+
+\subsection{LLM Clustering}

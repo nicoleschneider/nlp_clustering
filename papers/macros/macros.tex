@@ -5,10 +5,10 @@
 %Comment Boxes
     %Requires the etoolbox package
     %Note: The following needs to be inserted after the begin docment: 
-        %\newbool{showcomments}
+        \newbool{showcomments}
 
         % Show comments (Uncomment next line to show)
-        %\booltrue{showcomments}
+        \booltrue{showcomments}
 
         % Hide comments (Uncomment next line to hide)
         %\boolfalse{showcomments}
@@ -19,7 +19,8 @@
     }{}%
 }
 
-\newcommand{\authComment}[1]{\pinaforecomment{green}{AuthorName}{#1}{black}}
+\newcommand{\nrscomment}[1]{\pinaforecomment{violet}{Nicole}{#1}{white}}
+\newcommand{\avikcomment}[1]{\pinaforecomment{black}{Avik}{#1}{white}}
 
 %Emphasis commands
 \newcommand{\gai}{{\small \fontfamily{phv}\selectfont GraphAI~}}

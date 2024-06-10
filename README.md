@@ -3,6 +3,6 @@
 
 ## Useful Links
 
-[Prior work]([https://www.overleaf.com](https://github.com/nicoleschneider/TranslationClustering))
+[Prior work](https://github.com/nicoleschneider/TranslationClustering)
 
 [Data Source](https://newsstand.umiacs.umd.edu/web/)

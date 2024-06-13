@@ -1,12 +1,109 @@
 \section{Method}\label{section:method}
 
 \nrscomment{signpost}
+Clustering is done in an online fashion to simulate a live environment where articles are arriving as they are published, in real time.
 
-\subsection{Baseline Clustering}
+\avikcomment{This is the prompt I saw working the best today. I didn't do any actual counting of how good the results are, but I can try and program something up to query chatgpt this and just random pairs of articles and see how that goes. We'd need an API key though.}
+
+\nrscomment{we should probably add to the system prompt the fact that articles will be given in an online fashion, and should be clustered as they are presented, one at a time.}
+
+\subsection{Ground-Truth Single Language Clustering Setting}
+Use broadcaststand 300 articles (\url{https://github.com/nicoleschneider/BroadcastSTAND}) with hand labeled ground truth cluster assignment to test generic clustering ability of LLM in a single language setting.
+
+
+\begin{itemize}
+    \item E1: Does it do better with domain information in the initial system prompt?
+    \begin{lstlisting}[title=Prompt 1: Generic Initial System Prompt]
+    Say if these articles are about the same topic.
+    \end{lstlisting}
+    \avikcomment{I'm not sure how much info I'm supposed to give it in this generic system prompt, because I think right now, it's not clustering finely enough.}
+    
+    \nrscomment{how about for the generic one include the word cluster? "Cluster these articles based on their text content." maybe?}
+    \begin{lstlisting}[title=Prompt 2: Detailed Initial System Prompt]
+    You are tasked with clustering queries for a news system based on whether they express ideas about the same general topic. Your task will be considered successful if the queries are clustered into groups that consistently are about the same topic. Answer yes or no based on whether the two presented choices are about the same topic.
+    \end{lstlisting}
+
+    \nrscomment{swap out 'same topic' for 'same news event'?}
+    
+    \item E2: Does it do better with or without providing the article title? (Use whichever initial system prompt did better in the first test)
+    \begin{lstlisting}[title=Prompt 3: Text Alone Prompt]
+    Text 1: {text here}
+    
+    Text 2: {text here}
+    \end{lstlisting}
+    \begin{lstlisting}[title=Prompt 4: Title and Text Prompt]
+    Title 1: {title here}
+
+    Text 1: {text here}
+
+    Title 2: {title here}
+
+    Text 2: {text here}
+    \end{lstlisting}
+    
+    \item E3: Does it do better with or without providing hand-labeled keywords? (Choose to include title or not based on which setting did best in the first test)
+    \begin{lstlisting}[title=Prompt 5: Keywords Prompt]
+    Keywords 1: {keywords here}
+
+    Text 1: {text here}
+
+    Keywords 2: {keywords here}
+
+    Text 2: {keywords here}
+    \end{lstlisting}
+    \begin{lstlisting}[title=Prompt 6: No Keywords Prompt]
+    ...
+    \end{lstlisting}
+\end{itemize}
+
+For each experiment record the cluster labels assigned to each article and then calculate precision and recall compared to our ground truth labels.
+
+OPTIONAL - low priority:
+If E3 shows keyphrases give better performance:
+\begin{itemize}
+    \item Can it extract key phrases itself? 
+    \begin{lstlisting}[title=Prompt 7: Keyphrase Extraction Prompt]
+    ...
+    \end{lstlisting}
+\end{itemize}
+
+Compare the keywords it identifies to our hand-labeled keywords in the data.
+
+\subsection{Cross-Lingual Clustering}
+
+\subsubsection{Baseline Cross-Lingual Clustering}
 In the news domain, clustering is used to group together \emph{story clusters} containing all news articles that describe the same news event. In addition to the requirement that articles in the same cluster share many of the same keywords, they also must be published around the same timeframe. The temporal requirement stems from the emphasis on recency when presenting breaking stories to users. This premise lends itself well to online clustering, which requires less computation than one-shot approaches that involve re-clustering the entire corpus with every new article ingested~\cite{Teit08}.
 
 To accomplish the clustering, NewsStand employs the vector space model \cite{salton}, a common approach in text mining and information retrieval. The articles are converted to term feature vectors in d-dimensional space, where d is the number of distinct terms in every document in a corpus. The term feature vector is extracted using TF-IDF \cite{salton-buckley}. Elements of the term feature vector represent the frequency of their corresponding term in the document being ingested, where terms that are common in a document but uncommon in the corpus are emphasized. Since NewsStand is an online system with a dynamic corpus, the term feature vector is computed once for each article at the time it is ingested into the system.
 
 Clustering is also done in an online fashion using a variant of leader-follower clustering \cite{Duda73}. Articles are clustered across two dimensions: the term vector space and the temporal dimension. A term centroid and a time centroid are maintained for each cluster, representing the mean term feature vector and mean publication time of the articles in the cluster, respectively. For each new article ingested, clustering proceeds by checking if there exists a cluster with centroids less than a fixed cutoff distance from the article's term and time values. If so, the article is added to the nearest cluster and its centroids are updated, and if not, a new cluster is created containing only the new article. Term distances are computed using the standard cosine similarity \cite{steinbach}, and a Gaussian attenuator is applied to the temporal dimension to favor clusters with time centroids near the article's publication time.
 
-\subsection{LLM Clustering}
+
+\subsubsection{LLM Cross-Lingual Clustering}
+
+\begin{itemize}
+    \item Ask LLM to do the clustering of the large unlabeled dataset using the set of system and data prompts that were found to be the best in the single language setting.
+    \item We will compare the clusters the LLM finds to the baseline ones newsstand found, and do some qualitative analysis to see which is more reasonable.
+\end{itemize}
+
+
+\subsection{Cross-Lingual Keyphrase Extraction}
+OPTIONAL - low priority
+If we do the keyphrase analysis from the single language setting AND determine that the LLM is capable of extracting reasonable keyphrases, then we can further test that in the cross-lingual setting:
+\begin{itemize}
+    \item Ask LLM to extract key phrases using the keyphrase extraction prompt from the single-language setting and analyze the parts of speech of the keyphrases it pulls out. Are they mostly proper nouns like the original paper suggests should be the main driver of cluster behavior?
+\end{itemize}
+
+
+
+\subsection{Cross-Lingual Cluster Correction}
+OPTIONAL - nice to have. Do this after we have results if we need more content and have more time
+\begin{itemize}
+    \item Give LLM the cluster assignments newsstand came up with for the large dataset and ask it to improve them? 
+    \item For each point it moves, manually evaluate if its a better fit than the original cluster that article belonged to?
+    \item Any trends with the ones it improved vs. the ones it moved to worse clusters? Better at English-original text?
+    \begin{lstlisting}[title=Prompt 8: Cluster Correction Prompt]
+    ...
+    \end{lstlisting}
+\end{itemize}
+

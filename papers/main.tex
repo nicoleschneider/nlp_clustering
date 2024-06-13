@@ -41,6 +41,33 @@
 \usepackage{graphicx}
 \usepackage{svg}
 
+\usepackage{xcolor}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\usepackage{listings}
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+\lstset{style=mystyle}
+
 \title{Cross-Lingual Clustering Using LLMs}
 
 % Author information can be set in various styles:
@@ -73,10 +100,20 @@
 \affiliation{%
   \institution{University of Maryland}
   \city{College Park}
-  \state{Maryland}
+  \state{MD}
   \country{USA}
 }
 \email{adas1236@terpmail.umd.edu}
+
+\author{Kent O'Sullivan}
+\affiliation{%
+  \institution{University of Maryland}
+  \streetaddress{P.O. Box 1212}
+  \city{College Park}
+  \state{MD}
+  \country{USA}
+}
+\email{osullik@umd.edu}
 
 \author{Hanan Samet}
 \affiliation{%
@@ -103,8 +140,8 @@
 \latexfile{20_data.tex}
 \latexfile{30_method.tex}
 \latexfile{40_results.tex}
-\latexfile{50_related_work.tex}
-\latexfile{60_discussion_future_work.tex}
+\latexfile{50_discussion.tex}
+\latexfile{60_related_work.tex}
 \latexfile{70_conclusion.tex}
 
 \section*{Acknowledgements}

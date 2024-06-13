@@ -1,8 +1,8 @@
 \section{Related Work}\label{section:related_work}
 
-\nrscomment{signpost}
+In this section we discuss the related work in text clustering using LLMs.
 
-\subsection{Neural Embedding Space Methods} 
+\subsection{Neural Embedding Space Clustering} 
 The recent explosion in large language models has driven the development of several language-independent clustering methods. Approaches include using a 3-layer multilingual Bidirectional Long Short Term Memory (BLSTM) encoder to identify nearest neighbor sentences based on similarity in the embedding space, independent of language~\cite{Schw18}. Despite being trained on parallel news sentences, named entities like city names and ''comma groups''~\cite{Lieb10b} were removed after initial experiments showed that their multilingual distance was not sufficient to reliably distinguish between them. This points to a major issue with using the neural embedding space similarity as a strategy to cluster documents across languages. Previous work on Japanese-Vietnamese news story clustering~\cite{Hong17} and our present analysis on clustering patterns across 17 different languages both show that reasonable cluster formation is highly dependent on the proper nouns in documents, especially \emph{location} entities. 
 
 Other works show that multilingual embeddings~\cite{Amma18} and the intermediate state of Neural Machine Translation (NMT) models are promising tools for cross-lingual clustering, particularly in cases with resource-rich language pairs like Japanese-English~\cite{Seki18} and when downstream tasks like document classification are the ultimate goal. %Ammar et al. evaluated multilingual embeddings on downstream tasks like document classification using a combined approach that projects non-English language embeddings into an English embedding space~\cite{AMMAR}
@@ -10,3 +10,10 @@ Similarly, Pires et al.~\cite{Pire19} show that transformer-based models like Mu
 Even using M-BERT to cluster articles in a single language is a challenge. Stankevičius et al.~\cite{Stan20} use M-BERT to perform coarse-grained clustering of Lithuanian documents into 12 topic clusters. They achieved a Matthews Correlation Coefficient (MCC) score of about 0.25 even after fine-tuning, meaning cluster formation was closer to random clustering (score of 0) than perfect clustering (score of 1).
 
 \subsection{Direct Prompting to Cluster}
+
+\nrscomment{paceholder}
+
+
+\subsection{Using LLMs to Improve Cluster Assignment}
+
+\nrscomment{placeholder- see refs in MIT paper (\cite{Viswanathan2024}) related work}

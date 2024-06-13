@@ -1,3 +1,36 @@
 \section{introduction}\label{section:introduction}
 
+Text clustering is a problem that is relevant across a number of domains, including news, social media, health, finance, and more.
+While there exit a number of traditional clustering methods that work well for textual data, many rely on a shared vocabulary (i.e. TF-IDF~\nrscomment{add cite}).
+Clustering in a cross-lingual setting is particularly challenging, since there may not be a shared vocabulary or script across the languages, and so this setting has garnered recent attention~\cite{Schneider2023}.
 
+Recent approaches to cross-lingual clustering have found some success by leveraging latent embedding space representations from neural models trained to perform machine translation \nrscomment{add cite}.
+More recently Large Language Models (LLMs) themselves have been used to do text clustering in zero-shot or few-shot prompting approaches.
+The benefit of using LLMs to perform or aid in cross-lingual text clustering is that they contain powerful word models for the languages they were exposed to during training over massive amounts of textual data.
+
+Further, LLMs are flexible and capable of generating text on demand across a variety of languages, including ones with different vocabularies and scripts, making them potentially useful for the task of cross-lingual text clustering.
+To explore the viability of applying LLMs to the problem of cross-lingual text clustering, we perform a series of experiments using data from the news domain in an online clustering setting.
+We build on previous work in cross-lingual clustering in the news domain~\cite{Schneider2023} by testing whether LLMs can provide value beyond traditional clustering in the following key ways:
+\begin{enumerate}
+    \item Extracting keyphrases that are useful in clustering,
+    \item Outperforming baseline clustering methods in a single language setting, and
+    \item Performing clustering and cluster correction in a cross-lingual setting.
+\end{enumerate}
+
+We find that in the single-language setting, \nrscomment{which settings were useful at improving clustering} led to the best cluster assignments compared to hand-labeled ground truth cluster assignment.
+
+\nrscomment{describe keyphrase extraction if we do that}
+
+Using those settings on a larger cross-lingual dataset, we find that \nrscomment{how does LLM compare to baseline clustering?}.
+Through qualitative analysis, we find \nrscomment{summarize some insights we noticed}.
+
+\nrscomment{describe cluster correction if we do that}
+
+These findings pave the way for future work using LLMs in workflows that require clustering cross-lingual text data.
+Based on our findings that \nrscomment{fill in}, we suggest further work \nrscomment{fill in FW here}.
+
+The rest of this paper is organized as follows.
+In section \ref{section:data} we describe the news datasets that we use to evaluate single-language and cross-lingual clustering ability.
+Then, we describe our experimental setup in section \ref{section:method}, and our results in section \ref{section:results}.
+Next, we discuss the findings in section \ref{section:discussion} and summarize related work in LLM and neural clustering in \ref{section:related_work}.
+Finally, we discuss future work and conclude in section \ref{section:conclusion}.

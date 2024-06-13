@@ -1,1 +1,32 @@
 \section{Results}\label{section:results}
+
+\subsection{Ground-Truth Single Language Clustering Setting}
+\nrscomment{describe which prompts were the best}
+
+\nrscomment{table showing precision and recall for each of the 2 system prompts, with and without title prompts, and with and without keyphrases prompt}
+
+Using the ground-truth labels on the \emph{NewsStangGT} dataset, we compare the LLM clustering of the articles to compute the precision and recall of the cluster assignment. 
+To compute precision, articles the LLM grouped into the same cluster were considered "positives," and true positives (TP) were identified by finding the largest clusters with shared annotated keywords. 
+Clusters formed using manual annotations represent "all relevant instances" (True Positives + False Negatives). 
+To compute recall, we determined the largest LLM cluster's count for each hand labeled keyword tag. 
+For example, in the "King Charles" cluster, the maximum cluster size was 1, although 3 articles were manually tagged as being news stories about King Charles, resulting in a recall of 33.3\%. 
+Figure \nrscomment{ref} shows the recall performance for the LLM's cluster assignment across our 6 experimental conditions in the single-language setting. 
+%The average recall for all the keywords was \nrscomment{x}\%, while the average precision for all clusters was \nrscomment{y}\%. 
+
+
+
+
+
+\subsection{Cross-Lingual Clustering}
+
+\subsubsection{Cluster Visualization}
+\nrscomment{as a nice to have, visualize the clusterings done by both methods. maybe project them down into lower dimensional space? we have a viz like that in broadcastSTAND paper we can see if something like that makes sense \url{https://dl.acm.org/doi/pdf/10.1145/3615896.3628347}}
+
+\subsubsection{Qualitative Analysis}
+\nrscomment{for a few articles, look at the cluster they ended up in from the baseline assignment vs. the LLM assignment and qualitatively say which was better and why}
+
+\subsection{Cross-Lingual Keyphrase Extraction}
+\nrscomment{report what percent of the keywords extracted by the LLM are proper nouns vs. other POS types and compare to distributions given in original paper}
+
+\subsection{Cross-Lingual Cluster Correction}
+\nrscomment{qualitatively evaluate if changed points are in better or worse clusters. Analyze by language to see if some get moved correctly more than others.}

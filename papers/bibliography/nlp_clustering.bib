@@ -1122,3 +1122,56 @@
 }
 
 %% https://www3.nhk.or.jp/news/ --NHK
+
+
+
+@inproceedings{Schneider2023,
+author = {Schneider, Nicole R. and Sankaranarayanan, Jagan and Samet, Hanan},
+title = {Cross-lingual Text Clustering in a Large System},
+year = {2024},
+isbn = {9798400709227},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/3639233.3639356},
+doi = {10.1145/3639233.3639356},
+abstract = {The multilingual world needs systems that can cluster text written in multiple languages into the same thread or topic. Clustering multilingual text can be accomplished by translating and then clustering text in a canonical language, using multilingual embeddings to cluster articles in a shared embedding space, and via other language-independent methods. The performance and pitfalls of these various methods have not been well studied in the context of real-time clustering across documents written in many languages. We address this problem by generating a large dataset of news articles using a reference architecture that continuously indexed and clustered articles spanning 17 languages over the last 15 years. Through the analysis of these documents and their clusters, the clustering quality is shown to be dependent on the normalization of proper nouns, the types of georeferences, and the overall geographic focus of the document.},
+booktitle = {Proceedings of the 2023 7th International Conference on Natural Language Processing and Information Retrieval},
+pages = {1–11},
+numpages = {11},
+location = {<conf-loc>, <city>Seoul</city>, <country>Republic of Korea</country>, </conf-loc>},
+series = {NLPIR '23}
+}
+
+
+@inproceedings{Zhang2023,
+author = {Zhang, Jason and Kuo, Ai-Te and Schneider, Nicole R. and Peters, Jacob and Samet, Hanan},
+title = {BroadcastSTAND: Clustering Multimedia Sources of News},
+year = {2023},
+isbn = {9798400703584},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/3615896.3628347},
+doi = {10.1145/3615896.3628347},
+abstract = {News reaches a variety of audiences through any number of mediums, from traditional newspaper publications to social media posts to radio and TV broadcasts. These varied mediums present valuable research opportunities to gain insights into emerging trends. We present BroadcastStand, an extension framework for the NewsStand architecture, which traditionally focuses on online news articles and Twitter posts. Our objective is to seamlessly integrate a new genre of news data: radio and TV broadcasts. We show how these transcripts fit into the previous clustering landscape of traditional news data and highlight key insights that will drive future research in aggregating various news sources to increase the dimensions across which analysis can be done. In particular, we highlight the value in clustering these various sources of news data and highlight certain key pitfalls that must be addressed to obtain good clustering results.},
+booktitle = {Proceedings of the 7th ACM SIGSPATIAL Workshop on Location-Based Recommendations, Geosocial Networks and Geoadvertising},
+pages = {33–36},
+numpages = {4},
+keywords = {NewsStand, broadcast data, clustering},
+location = {<conf-loc>, <city>Hamburg</city>, <country>Germany</country>, </conf-loc>},
+series = {LocalRec '23}
+}
+
+@article{Viswanathan2024,
+    author = {Viswanathan, Vijay and Gashteovski, Kiril and Gashteovski, Kiril and Lawrence, Carolin and Wu, Tongshuang and Neubig, Graham},
+    title = "{Large Language Models Enable Few-Shot Clustering}",
+    journal = {Transactions of the Association for Computational Linguistics},
+    volume = {12},
+    pages = {321-333},
+    year = {2024},
+    month = {04},
+    abstract = "{Unlike traditional unsupervised clustering, semi-supervised clustering allows users to provide meaningful structure to the data, which helps the clustering algorithm to match the user’s intent. Existing approaches to semi-supervised clustering require a significant amount of feedback from an expert to improve the clusters. In this paper, we ask whether a large language model (LLM) can amplify an expert’s guidance to enable query-efficient, few-shot semi-supervised text clustering. We show that LLMs are surprisingly effective at improving clustering. We explore three stages where LLMs can be incorporated into clustering: before clustering (improving input features), during clustering (by providing constraints to the clusterer), and after clustering (using LLMs post-correction). We find that incorporating LLMs in the first two stages routinely provides significant improvements in cluster quality, and that LLMs enable a user to make trade-offs between cost and accuracy to produce desired clusters. We release our code and LLM prompts for the public to use.1}",
+    issn = {2307-387X},
+    doi = {10.1162/tacl_a_00648},
+    url = {https://doi.org/10.1162/tacl\_a\_00648},
+    eprint = {https://direct.mit.edu/tacl/article-pdf/doi/10.1162/tacl\_a\_00648/2362202/tacl\_a\_00648.pdf},
+}

@@ -1,7 +1,9 @@
 \section{Method}\label{section:method}
 
-\nrscomment{signpost}
-Clustering is done in an online fashion to simulate a live environment where articles are arriving as they are published, in real time.
+In this section we describe our experimental setup, including the baselines for comparison and the prompts we use to elicit cluster assignments from the LLM.
+All clustering is done in an online fashion to simulate a live environment where news articles are arriving as they are published, in real time.
+To achieve this online clustering effect through zero-shot LLM prompting, we provide an initial system prompt stating the task, and then a series of prompts containing individual articles that should be assigned to a cluster.
+To retain the context of the previous articles that have already been assigned clusters, for each subsequent prompt we provide the cumulative previous interactions along with the new article.
 
 \avikcomment{This is the prompt I saw working the best today. I didn't do any actual counting of how good the results are, but I can try and program something up to query chatgpt this and just random pairs of articles and see how that goes. We'd need an API key though.}
 
@@ -14,42 +16,44 @@ Use broadcaststand 300 articles (\url{https://github.com/nicoleschneider/Broadca
 \begin{itemize}
     \item E1: Does it do better with domain information in the initial system prompt?
     \begin{lstlisting}[title=Prompt 1: Generic Initial System Prompt]
-    Say if these articles are about the same topic.
+    Cluster these articles based on if they're about the same news story. Respond with clusters of articles in json format storing lists of ids.
     \end{lstlisting}
     \avikcomment{I'm not sure how much info I'm supposed to give it in this generic system prompt, because I think right now, it's not clustering finely enough.}
     
     \nrscomment{how about for the generic one include the word cluster? "Cluster these articles based on their text content." maybe?}
     \begin{lstlisting}[title=Prompt 2: Detailed Initial System Prompt]
-    You are tasked with clustering queries for a news system based on whether they express ideas about the same general topic. Your task will be considered successful if the queries are clustered into groups that consistently are about the same topic. Answer yes or no based on whether the two presented choices are about the same topic.
+    You are tasked with clustering queries for a news system based on whether they express ideas about the same news story. Your task will be considered successful if you consistently group together articles about the same story. You will be fed articles one by one in the form:
+
+    id: {id}
+    
+    text: {text}
+    
+    Respond with clusters of articles in json format, where the each cluster stores a list of ids. If no cluster fits a news article, simply make a new one.
     \end{lstlisting}
 
     \nrscomment{swap out 'same topic' for 'same news event'?}
     
     \item E2: Does it do better with or without providing the article title? (Use whichever initial system prompt did better in the first test)
     \begin{lstlisting}[title=Prompt 3: Text Alone Prompt]
-    Text 1: {text here}
+    id: {id number}
     
-    Text 2: {text here}
+    Text: {text here}
     \end{lstlisting}
     \begin{lstlisting}[title=Prompt 4: Title and Text Prompt]
-    Title 1: {title here}
+    id: {id number}
+    
+    Title: {title here}
 
-    Text 1: {text here}
-
-    Title 2: {title here}
-
-    Text 2: {text here}
+    Text: {text here}
     \end{lstlisting}
     
     \item E3: Does it do better with or without providing hand-labeled keywords? (Choose to include title or not based on which setting did best in the first test)
     \begin{lstlisting}[title=Prompt 5: Keywords Prompt]
-    Keywords 1: {keywords here}
+    id: {id number}
+    
+    Keywords: {keywords here}
 
-    Text 1: {text here}
-
-    Keywords 2: {keywords here}
-
-    Text 2: {keywords here}
+    Text: {text here}
     \end{lstlisting}
     \begin{lstlisting}[title=Prompt 6: No Keywords Prompt]
     ...

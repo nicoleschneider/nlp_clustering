@@ -40,7 +40,7 @@
 % % % % % % % % % % % % % % % % % % % %
 \usepackage{graphicx}
 \usepackage{svg}
-
+\usepackage[]{acronym}
 \usepackage{xcolor}
 
 \definecolor{codegreen}{rgb}{0,0.6,0}
@@ -132,6 +132,9 @@
 %Load User-Defined Macros
 \input{macros/macros.tex}
 
+\newacro{NMI}[NMI]{Normalized Mutual Information}
+
+
 \latexfile{00_abstract.tex}
 
 \maketitle
@@ -145,6 +148,8 @@
 \latexfile{70_conclusion.tex}
 
 \section*{Acknowledgements}
+This work was sponsored in part by the \grantsponsor{1}{NSF}{} under Grants \grantnum{1}{IIS-18-16889}, \grantnum{1}{IIS-20-41415}, and \grantnum{1}{IIS-21-14451}, and the Australian-American Fulbright Commission. Its contents do not necessarily represent the official views of the Fulbright Program.
+
 
 % Print the bibliography entry
 \bibliographystyle{style/ACM-Reference-Format.bst}

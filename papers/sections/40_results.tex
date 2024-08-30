@@ -1,25 +1,58 @@
 \section{Results}\label{section:results}
 
-In this section we decribe the results of the experiments outlined in section \ref{section:method}.
+In this section we describe the results of the experiments outlined in section \ref{section:method}.
 
-\subsection{Ground-Truth Single Language Clustering Setting}
+\subsection{Single Language Clustering Setting}
+
+Table \ref{tab:single-lang-results} shows the NMI performance results for the baseline method and the LLM models across our five LLM conditions in the single-language setting. 
+
 \nrscomment{describe which prompts were the best}
 
-\nrscomment{table showing precision and recall for each of the 2 system prompts, with and without title prompts, and with and without keyphrases prompt}
-
-Using the ground-truth labels on the \emph{NewsStangGT} dataset, we compare the LLM clustering of the articles to compute the precision and recall of the cluster assignment. 
-To compute precision, articles the LLM grouped into the same cluster were considered "positives," and true positives (TP) were identified by finding the largest clusters with shared annotated keywords. 
-Clusters formed using manual annotations represent "all relevant instances" (True Positives + False Negatives). 
-To compute recall, we determined the largest LLM cluster's count for each hand labeled keyword tag. 
-For example, in the "King Charles" cluster, the maximum cluster size was 1, although 3 articles were manually tagged as being news stories about King Charles, resulting in a recall of 33.3\%. 
-Figure \nrscomment{ref} shows the recall performance for the LLM's cluster assignment across our 6 experimental conditions in the single-language setting. 
-%The average recall for all the keywords was \nrscomment{x}\%, while the average precision for all clusters was \nrscomment{y}\%. 
+\nrscomment{also qualitatively compare how keywords maintained for each cluster compare to the hand-labeled keywords}
 
 
+\begin{table*}[ht!]
+    \centering
+    \begin{tabular}{l|l|cccc|r}
+        \textbf{Method}       & \textbf{Model}    & \textbf{System Prompt} & \textbf{Title} & \textbf{Timestamp} & \textbf{Geo-coords} &\textbf{NMI} \\
+        \hline
+        NewsStand (baseline)  & ~                 & ~                      & ~              & ~                  & ~                    & ... \\
+        ~                     & ~                 & ~                      & ~              & ~                  & ~                    & ~   \\
+        LLM                   & gpt-3.5-turbo     & Generic                & ~              & ~                  & ~                    & ... \\
+        ~                     & gpt-4o            & Generic                & ~              & ~                  & ~                    & ... \\
+        ~                     & gpt-4o mini       & Generic                & ~              & ~                  & ~                    & ... \\
+        ~                     & gemini-1.5-flash  & Generic                & ~              & ~                  & ~                    & ... \\
+        ~                     & ~                 & ~                      & ~              & ~                  & ~                    & ~   \\
+        ~                     & gpt-3.5-turbo     & Detailed               & ~              & ~                  & ~                    & ... \\
+        ~                     & gpt-4o            & Detailed               & ~              & ~                  & ~                    & ... \\
+        ~                     & gpt-4o mini       & Detailed               & ~              & ~                  & ~                    & ... \\
+        ~                     & gemini-1.5-flash  & Detailed               & ~              & ~                  & ~                    & ... \\
+        ~                     & ~                 & ~                      & ~              & ~                  & ~                    & ~   \\
+        ~                     & gpt-3.5-turbo     & ????????               & X              & ~                  & ~                    & ... \\
+        ~                     & gpt-4o            & ????????               & X              & ~                  & ~                    & ... \\
+        ~                     & gpt-4o mini       & ????????               & X              & ~                  & ~                    & ... \\
+        ~                     & gemini-1.5-flash  & ????????               & X              & ~                  & ~                    & ... \\
+        ~                     & ~                 & ~                      & ~              & ~                  & ~                    & ~   \\
+        ~                     & gpt-3.5-turbo     & ????????               & ~              & X                  & ~                    & ... \\
+        ~                     & gpt-4o            & ????????               & ~              & X                  & ~                    & ... \\
+        ~                     & gpt-4o mini       & ????????               & ~              & X                  & ~                    & ... \\
+        ~                     & gemini-1.5-flash  & ????????               & ~              & X                  & ~                    & ... \\
+        ~                     & ~                 & ~                      & ~              & ~                  & ~                    & ~   \\
+        ~                     & gpt-3.5-turbo     & ????????               & ~              & ~                  & X                    & ... \\
+        ~                     & gpt-4o            & ????????               & ~              & ~                  & X                    & ... \\
+        ~                     & gpt-4o mini       & ????????               & ~              & ~                  & X                    & ... \\
+        ~                     & gemini-1.5-flash  & ????????               & ~              & ~                  & X                    & ... \\
+
+    \end{tabular}
+    \caption{Summary of single-language clustering results for baseline and LLM methods compared to ground-truth cluster assignment.}
+    \label{tab:single-lang-results}
+\end{table*}
 
 
 
-\subsection{Cross-Lingual Clustering}
+
+
+\subsection{Cross-Lingual Clustering Setting}
 
 \subsubsection{Cluster Visualization}
 
@@ -29,10 +62,11 @@ Figure \nrscomment{ref} shows the recall performance for the LLM's cluster assig
 
 \nrscomment{for a few articles, look at the cluster they ended up in from the baseline assignment vs. the LLM assignment and qualitatively say which was better and why}
 
-\subsection{Cross-Lingual Keyphrase Extraction}
+% \subsection{Cross-Lingual Keyphrase Extraction}
 
-\nrscomment{report what percent of the keywords extracted by the LLM are proper nouns vs. other POS types and compare to distributions given in original paper}
+% \nrscomment{report what percent of the keywords reported by the LLM are proper nouns vs. other POS types and compare to distributions given in original paper. Are they mostly proper nouns like the original paper suggests should be the main driver of cluster behavior?}
 
-\subsection{Cross-Lingual Cluster Correction}
 
-\nrscomment{qualitatively evaluate if changed points are in better or worse clusters. Analyze by language to see if some get moved correctly more than others.}
+% \subsection{Cross-Lingual Cluster Correction}
+
+% \nrscomment{qualitatively evaluate if changed points are in better or worse clusters. Analyze by language to see if some get moved correctly more than others.}

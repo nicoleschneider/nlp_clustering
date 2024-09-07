@@ -1,20 +1,35 @@
 \section{Related Work}\label{section:related_work}
 
-In this section we discuss the related work in text clustering using LLMs.
+In this section we discuss the related work in text clustering using LLMs and neural methods.
 
 \subsection{Neural Embedding Space Clustering} 
-\nrscomment{this is copied direct from other paper, keep the relevant parts and reword it a bit}
-The recent explosion in large language models has driven the development of several language-independent clustering methods. Approaches include using a 3-layer multilingual Bidirectional Long Short Term Memory (BLSTM) encoder to identify nearest neighbor sentences based on similarity in the embedding space, independent of language~\cite{Schw18}. Despite being trained on parallel news sentences, named entities like city names and ''comma groups''~\cite{Lieb10b} were removed after initial experiments showed that their multilingual distance was not sufficient to reliably distinguish between them. This points to a major issue with using the neural embedding space similarity as a strategy to cluster documents across languages. Previous work on Japanese-Vietnamese news story clustering~\cite{Hong17} and our present analysis on clustering patterns across 17 different languages both show that reasonable cluster formation is highly dependent on the proper nouns in documents, especially \emph{location} entities. 
 
-Other works show that multilingual embeddings~\cite{Amma18} and the intermediate state of Neural Machine Translation (NMT) models are promising tools for cross-lingual clustering, particularly in cases with resource-rich language pairs like Japanese-English~\cite{Seki18} and when downstream tasks like document classification are the ultimate goal. %Ammar et al. evaluated multilingual embeddings on downstream tasks like document classification using a combined approach that projects non-English language embeddings into an English embedding space~\cite{AMMAR}
-Similarly, Pires et al.~\cite{Pire19} show that transformer-based models like Multilingual-BERT (M-BERT) can map different languages to a shared cross-lingual embedding space, but they find that M-BERT does not handle typologically divergent languages well.
-Even using M-BERT to cluster articles in a single language is a challenge. Stankevičius et al.~\cite{Stan20} use M-BERT to perform coarse-grained clustering of Lithuanian documents into 12 topic clusters. They achieved a Matthews Correlation Coefficient (MCC) score of about 0.25 even after fine-tuning, meaning cluster formation was closer to random clustering (score of 0) than perfect clustering (score of 1).
+Several language-independent clustering methods that rely on neural embedding spaces have been developed recently.
+Approaches include using a 3-layer multilingual Bidirectional Long Short Term Memory (BLSTM) encoder to identify nearest neighbor sentences based on similarity in the embedding space, independent of language~\cite{Schw18}. 
+Despite being trained on parallel news sentences, named entities like city names and ''comma groups''~\cite{Lieb10b} were removed after initial experiments showed that their multilingual distance was not sufficient to reliably distinguish between them. 
+This points to a major issue with using the neural embedding space similarity as a strategy to cluster documents across languages. 
+Previous work on Japanese-Vietnamese news story clustering~\cite{Hong17} and cross-lingual news clustering covering 17 languages~\cite{Schneider2023} both show that reasonable cluster formation is highly dependent on the proper nouns in documents, especially location entities. 
 
-\subsection{Direct Prompting to Cluster}
+Other works show that multilingual embeddings~\cite{Amma18} and the intermediate state of Neural Machine Translation (NMT) models are promising tools for cross-lingual clustering, particularly in cases with resource-rich language pairs like Japanese-English~\cite{Seki18} and when downstream tasks like document classification are the ultimate goal. 
+Similarly, Pires et al. show that transformer-based models like Multilingual-BERT (M-BERT) can map different languages to a shared cross-lingual embedding space, but even using it to cluster articles in a single language does not work well~\cite{Pire19, Stan20}. 
+Generally, neural embedding space methods for cross-lingual clustering show some promise, but lack consistent performance across a variety of languages.
 
-\nrscomment{paceholder}
 
+\subsection{LLM Clustering through Prompting}
+
+Previous work has attempted to use LLMs to directly cluster articles written in a single language. 
+Zhang et al.~\cite{Zhang2023clusterllm} showed that LLMs were effective in determining cluster granularity using a pairwise task, as well as showing their effectiveness in topic mining and intent discovery. 
+Viswanathan et. al.~\cite{Viswanathan2024} further this work by showing that LLMs perform well in entity canonicalization and text clustering, while also showing that LLMs were effective with keyphrase based clustering. 
+However, in both cases, the textual data used for clustering are short documents, which limits the applicability to domains like news, where documents are typically longer.
+Petukhova et al.~\cite{petukhova2024textclusteringllmembeddings} also find that LLM embeddings are useful in clustering contexts, showing that using clustering techniques such as spectral methods and $k$-means generally performs best in OpenAI embeddings. 
+Some recent work has also focused directly on clustering news articles and newsworthy events.
+Nakshatri et al.~\cite{NakshatriEtal2023NewsSummaries} used LLMs to perform event discovery on news articles, after which they were clustered based on the events discovered. 
+They found LLM methods to be more effective than traditional event detection methods in both entity purity and entity coherence, but focus only on a single language.
+LLMs have also been shown to be effective in classifying morality, as shown in Roy et al. ~\cite{RoyEtal2022Morality} which used LLMs to identify the moral foundation expressed in political tweets, as well as the moral roles of entities in tweets in few-shot clustering scenarios, and found it to be more effective than RoBERTa-based frameworks, but this work is also on shorter text snippets in a single language. 
 
 \subsection{Using LLMs to Improve Cluster Assignment}
 
-\nrscomment{placeholder- see refs in MIT paper (\cite{Viswanathan2024}) related work. Pulled out \cite{Zhang2023clusterllm} - we should read that and see how it differs from what we do}
+In addition to prompting LLMs to perform cluster assignment directly, Viswanathan et. al.~\cite{Viswanathan2024} used LLMs to correct clustering assignments, and found that LLM corrected clusters generally improved rather than degraded in quality (102 improved vs. 52 degraded).
+This line of work highlights the flexibility of LLMs to dynamically cluster and re-cluster articles, which is a benefit that many of the more traditional clustering approaches do not provide.
+Further work could apply similar concepts of cluster correction to the cross-lingual setting to determine if some of the clustering issues we observed can be corrected through iterative re-clustering.
+

@@ -1,7 +1,8 @@
-\section{Conclusion}\label{section:conclusion}
+\section{Conclusion and Future Work}\label{section:conclusion}
 
 This paper presents experiments measuring LLM performance at the task of cross-lingual clustering of long news articles spanning seven languages.
 We find that LLMs tend to cluster the articles based on the language of the article text more than the content, and often entirely ignore the time and location of publication of the article, even when explicitly provided that information.
 Based on these findings, future work, such as developing appropriate few-shot prompting methods, is needed before LLMs can reliably be used in clustering news articles across multiple languages.
+In addition, further work may improve LLM clustering results by encoding geospatial information in English (e.g. by using the name of a place, such as College Park) rather than in latitude and longitude pairs, which LLMs have been shown to misinterpret~\cite{manvi2024geollmextractinggeospatialknowledge}. 
 As LLMs improve and methods to use them for cross-lingual clustering are developed, the task presented in this paper can be expanded to include additional steps, such as having the LLM also perform the geo-coordinate extraction, rather than providing it with the article.
 Work in this direction is promising given the latent world knowledge embedded in LLMs that can be leveraged when clustering articles across languages and locations.

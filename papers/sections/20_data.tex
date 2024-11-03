@@ -7,7 +7,7 @@ The NewsStand interface is dynamic, so articles are collected, processed, and cl
 %The interface also allows users to pan and zoom in to narrow the focus to local news stories or zoom out to view globally relevant international news stories. 
 % After assigning a location to each article, NewsStand aggregates the articles into clusters based on the textual content and locations referenced within the document. 
 % Critically, this enables articles to be ranked by story significance and displayed to users based on the map position and zoom level selected through the interface.
-
+%
 Using NewsStand, we construct two datasets: \emph{NewsStandEN} and \emph{NewsStandMULTI}, containing English and non-English news articles, respectively.
 
 \subsection{Data Pre-Processing}
@@ -19,12 +19,13 @@ This is accomplished using a combination of Part-Of-Speech (POS) tagging and sta
 For more details on this process, see \cite{Same09d, Lieb07, Ho12}. 
 Once extracted, the EFV contains words belonging to proper noun classes, including location. 
 Location entities in the EFV are then assigned a set of matching locations during the Gazetteer Record Assignment stage and the toponyms are resolved during the Geographic Name Disambiguation phase \cite{Leid11, Lieb10b, Lieb11, Lieb12, Same14b, Schn21}.
-The resolved toponyms are then used to determine the geo-coordinates associated with each news article.
+The resolved toponyms are then used to determine the geo-coordinates associated with each news article, using the method outlined in \citeauthor{Teit08}~\cite{Teit08} and \citeauthor{Lieb07}~\cite{Lieb07}.
+Geo-coordinates associated with the strongest geographic reference are assigned to the article, based on a weighted score that emphasizes frequency of the geo-reference within the text, and nearness of the geo-reference to the beginning of the text. 
 Along with the geo-coordinates, the timestamp representing the time of publication of the article is retained to aid with clustering. 
 Additional metadata, including the title of the article, is retained along with the text, timestamp, and geo-coordinates.
 
-We use \textit{Lingua}~\footnote{\url{https://github.com/pemistahl/lingua-py}}, a language detection model that uses statistical and rule-based information to identify the language of the text in each article and assign an appropriate language tag.
-The language tags were then used to split the articles into two datasets: \emph{NewsStandEN} and \emph{NewsStandMULTI}, containing English and non-English news articles, respectively.
+We use \textit{Lingua,}~\footnote{\url{https://github.com/pemistahl/lingua-py}} a language detection model that uses statistical and rule-based information, to identify the language of the text in each article and assign an appropriate language tag.
+The language tags are then used to split the articles into two datasets: \emph{NewsStandEN} and \emph{NewsStandMULTI}, containing English and non-English news articles, respectively.
 
 \subsection{NewsStandMULTI}
 
@@ -60,7 +61,6 @@ Table \ref{table:newsstandlarge-stats} summarizes the language distribution of t
 
 The NewsStand dataset containing English-only articles with ground truth cluster labels (termed \emph{NewsStandEN}~\footnote{\url{https://github.com/osullik/multilingual_llm_clustering/blob/main/data/raw/spatial_nlp_en_detected_language.csv}}) contains a sample of 100 news articles and their metadata.
 The articles had an average of 778.75 words each, with the lower quartile having 482 or less and the upper quartile having 883.5 or more, and range between 30 words and 5545 words, making NewsStandEN articles slightly shorter than NewsStandMULTI articles overall.
-The lengths of the articles ranged 30 words to 5545 words.
 The pre-processing steps for this dataset include an additional hand labeling phase.
 Cluster labels for this dataset were hand-annotated, following the method in \citeauthor{Zhang2023}~\cite{Zhang2023}.
 First, one or more keywords describing the news event were assigned to each article by one of three annotators.

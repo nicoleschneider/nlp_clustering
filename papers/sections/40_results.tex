@@ -35,7 +35,7 @@
 
     \end{tabular}
     \caption{Summary of multi-lingual clustering results for baseline and LLM methods compared to NewsStand cluster assignment}
-    \label{tab:single-lang-results}
+    \label{tab:multi-lang-results}
 \end{table*}
 
 
@@ -69,13 +69,16 @@ Furthermore, we observed some nonsensical keywords, including article IDs, blank
 
 \subsection{Cross-Lingual Clustering Setting}
 
+Table \ref{tab:multi-lang-results} shows the NMI between the LLM-based clusterings and the baseline NewsStand clusterings on the \emph{NewsStandMULTI} dataset.
+The results show that the correspondence between the LLM-based methods and the baseline method are low.
+Since we lack ground truth labels for the multi-lingual dataset, to determine which method(s) produced better clusterings, we explore the clusters qualitatively.
+
 \subsubsection{Cluster Visualization}
 
-Given the lack of ground truth cluster labels for the cross-lingual clustering setting, we qualitatively explore the articles and their assigned clusters to better understand the how performance is impacted by expanding the document pool to include articles written in a variety of languages.
 We use OpenAI's text-3-embedding-large\footnote{\url{https://platform.openai.com/docs/guides/embeddings/faq}} to construct a t-SNE plot of the articles (Figure \ref{figure:tsne-plots}).
 % \nrscomment{@Avik is there a cite for the embeddings?} to visualize the articles in \emph{NewsStandMULTI} (Figure \ref{figure:tsne-plots}).
 Coloring each language differently, it is clear that location in the embedding space is highly correlated with language- with few exceptions, the documents form clear groupings based on their language.
-There is also a clear correlation between location in the embedding space and the cluster label assigned by both the baseline method and by GPT-4o. 
+There is also a correlation between location in the embedding space and the cluster label assigned by both the baseline method and by GPT-4o. 
 
 
 \begin{figure}[ht]
@@ -93,7 +96,7 @@ There is also a clear correlation between location in the embedding space and th
         \label{fig:plot_newsstand}
     }
     \end{subfigure}
-    \caption{\textbf{t-SNE plots of NewsStandMULTI articles by language and cluster label for baseline cluster assignment and GPT-4o cluster assignment.}}\label{figure:tsne-plots} 
+    \caption{\textbf{t-SNE plots of NewsStandMULTI articles by language and cluster label for baseline cluster assignment and GPT-4o cluster assignment. Best viewed in color.}}\label{figure:tsne-plots} 
 \end{figure}
 
 

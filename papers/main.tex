@@ -2,13 +2,13 @@
 \pdfoutput=1
 % In particular, the hyperref package requires pdfLaTeX in order to break URLs across lines.
 
-\documentclass[sigconf]{acmart}
+\documentclass[sigconf]{style/acmart}
 
 
 
 % Standard package includes
-\usepackage{times}
-\usepackage{latexsym}
+% \usepackage{times}
+% \usepackage{latexsym}
 
 % For proper rendering and hyphenation of words containing Latin characters (including in bib files)
 \usepackage[T1]{fontenc}
@@ -134,6 +134,49 @@
 \input{macros/macros.tex}
 
 \newacro{NMI}[NMI]{Normalized Mutual Information}
+
+
+
+\copyrightyear{2024}
+\acmYear{2024}
+\setcopyright{rightsretained}
+\acmConference[GeoAI'24]{7th ACM SIGSPATIAL International Workshop on AI for Geographic Knowledge Discovery}{October 29-November 1, 2024}{Atlanta, GA, USA}
+\acmBooktitle{7th ACM SIGSPATIAL International Workshop on AI for Geographic Knowledge Discovery (GeoAI'24), October 29-November 1, 2024, Atlanta, GA, USA}
+\acmDOI{10.1145/3687123.3698280}
+\acmISBN{979-8-4007-1176-3/24/10}
+
+
+\begin{CCSXML}
+<ccs2012>
+   <concept>
+       <concept_id>10010147.10010178.10010179.10010182</concept_id>
+       <concept_desc>Computing methodologies~Natural language generation</concept_desc>
+       <concept_significance>500</concept_significance>
+       </concept>
+   <concept>
+       <concept_id>10010147.10010257.10010282.10010284</concept_id>
+       <concept_desc>Computing methodologies~Online learning settings</concept_desc>
+       <concept_significance>100</concept_significance>
+       </concept>
+   <concept>
+       <concept_id>10002951.10003227.10003351.10003444</concept_id>
+       <concept_desc>Information systems~Clustering</concept_desc>
+       <concept_significance>500</concept_significance>
+       </concept>
+   <concept>
+       <concept_id>10002951.10003227.10003236.10003237</concept_id>
+       <concept_desc>Information systems~Geographic information systems</concept_desc>
+       <concept_significance>300</concept_significance>
+       </concept>
+ </ccs2012>
+\end{CCSXML}
+
+\ccsdesc[500]{Computing methodologies~Natural language generation}
+\ccsdesc[100]{Computing methodologies~Online learning settings}
+\ccsdesc[500]{Information systems~Clustering}
+\ccsdesc[300]{Information systems~Geographic information systems}
+
+\keywords{Cross-lingual clustering, large language model, news domain, event clustering, spatio-temporal clustering}
 
 
 \latexfile{00_abstract.tex}

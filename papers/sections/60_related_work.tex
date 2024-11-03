@@ -13,23 +13,26 @@ Previous work on Japanese-Vietnamese news story clustering~\cite{Hong17} and cro
 Other works show that multilingual embeddings~\cite{Amma18} and the intermediate state of Neural Machine Translation (NMT) models are promising tools for cross-lingual clustering, particularly in cases with resource-rich language pairs like Japanese-English~\cite{Seki18} and when downstream tasks like document classification are the ultimate goal. 
 Similarly, Pires et al. show that transformer-based models like Multilingual-BERT (M-BERT) can map different languages to a shared cross-lingual embedding space, but even using it to cluster articles in a single language does not work well~\cite{Pire19, Stan20}. 
 Generally, neural embedding space methods for cross-lingual clustering show some promise, but lack consistent performance across a variety of languages.
-
+%
+Jiang et al. ~\cite{jiang-etal-2024-topic} have also attempted to use neural embedding based clustering that accepts time data to try to improve cluster assignments via temporal data, finding success over previous clustering methods.
 
 \subsection{LLM Clustering through Prompting}
 
 Previous work has attempted to use LLMs to directly cluster articles written in a single language. 
 Zhang et al.~\cite{Zhang2023clusterllm} showed that LLMs were effective in determining cluster granularity using a pairwise task, as well as showing their effectiveness in topic mining and intent discovery. 
 Viswanathan et. al.~\cite{Viswanathan2024} further this work by showing that LLMs perform well in entity canonicalization and text clustering, while also showing that LLMs were effective with keyphrase based clustering. 
-However, in both cases, the textual data used for clustering are short documents, which limits the applicability to domains like news, where documents are typically longer.
-Petukhova et al.~\cite{petukhova2024textclusteringllmembeddings} also find that LLM embeddings are useful in clustering contexts, showing that using clustering techniques such as spectral methods and $k$-means generally performs best in OpenAI embeddings. 
+However, in both cases, the textual data used for clustering consists of short documents, which limits the applicability to domains like news, where documents are typically longer.
+Petukhova et al.~\cite{petukhova2024textclusteringllmembeddings} also find that LLM embeddings are useful in clustering contexts, showing that clustering techniques such as spectral methods and $k$-means generally perform best in OpenAI embeddings. 
 Some recent work has also focused directly on clustering news articles and newsworthy events.
 Nakshatri et al.~\cite{NakshatriEtal2023NewsSummaries} used LLMs to perform event discovery on news articles, after which they were clustered based on the events discovered. 
 They found LLM methods to be more effective than traditional event detection methods in both entity purity and entity coherence, but focus only on a single language.
-LLMs have also been shown to be effective in classifying morality, as shown in Roy et al. ~\cite{RoyEtal2022Morality} which used LLMs to identify the moral foundation expressed in political tweets, as well as the moral roles of entities in tweets in few-shot clustering scenarios, and found it to be more effective than RoBERTa-based frameworks, but this work is also on shorter text snippets in a single language. 
+LLMs have also been shown to be effective in classifying morality, as shown in Roy et al. ~\cite{RoyEtal2022Morality} which used LLMs to identify the moral foundation expressed in political tweets, as well as the moral roles of entities in tweets in few-shot clustering scenarios.
+In that setting, they find LLMs to be more effective than RoBERTa-based frameworks, but the work is also on shorter text snippets in a single language. 
+
 
 \subsection{Using LLMs to Improve Cluster Assignment}
 
 In addition to prompting LLMs to perform cluster assignment directly, Viswanathan et. al.~\cite{Viswanathan2024} used LLMs to correct clustering assignments, and found that LLM corrected clusters generally improved rather than degraded in quality (102 improved vs. 52 degraded).
 This line of work highlights the flexibility of LLMs to dynamically cluster and re-cluster articles, which is a benefit that many of the more traditional clustering approaches do not provide.
-Further work could apply similar concepts of cluster correction to the cross-lingual setting to determine if some of the clustering issues we observed can be corrected through iterative re-clustering.
+Further work could apply similar concepts of cluster correction to the cross-lingual setting to determine if some of the clustering issues we observe in the present paper can be corrected through iterative re-clustering.
 

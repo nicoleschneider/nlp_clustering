@@ -9,7 +9,7 @@ In one case, using GPT-4o with the detailed system prompt, the NMI was higher th
 Surprisingly, adding article title, geo-coordinates, or timestamp information made the cluster assignments worse, even though that information is intuitively useful for determining which cluster an article belongs to.
 This finding suggests that it is difficult (under our zero-shot setting) to get current LLMs to leverage multiple pieces of disparate intimation (timestamp, article text, coordinates) to decide an appropriate cluster for the articles.
 Given the clear room for improvement, we suggest further work on using LLMs to cluster text with an emphasis on incorporating metadata like time and location associated with the text.
-Few shot prompting is the logical next step to better leverage LLMs in this capacity.
+Using few shot prompting and trying different methods of encoding geo-coordinate and time information are the logical next steps to better leverage LLMs in this capacity.
 
 \subsection{Cross-Lingual Clustering Setting}
 
@@ -44,5 +44,5 @@ Overall, we found that besides occasionally producing degenerate cluster assignm
         \label{fig:plot_newsstand_time}
     }
     \end{subfigure}
-    \caption{\textbf{Timeline plot of GPT-4o clusters vs baseline NewsStand clusters.}}\label{figure:time-plots} 
+    \caption{\textbf{Timeline plot of GPT-4o clusters vs baseline NewsStand clusters. Best viewed in color.}}\label{figure:time-plots} 
 \end{figure}

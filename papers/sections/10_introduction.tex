@@ -10,9 +10,9 @@ The benefit of using LLMs to perform or aid in cross-lingual text clustering is 
 Further, LLMs are flexible and capable of generating text on demand across a variety of languages, including ones with different vocabularies and scripts, making them potentially useful for the task of cross-lingual text clustering.
 
 Despite these apparent advantages, much of the recent work in clustering text documents using LLMs has focused on clustering short documents, such as social media posts, in a single language, such as English.
-The challenge remains to automatically cluster of longer documents, such as publications or news articles, written in different languages, which is relevant in a number of domains.
+The challenge remains to automatically cluster longer documents, such as publications or news articles, written in different languages, which is relevant in a number of domains.
 
-In this paper, we explore the viability of applying LLMs to the problem of cross-lingual text clustering, by performing a series of experiments using data from the news domain in an online clustering setting.
+In this paper, we explore the viability of applying LLMs to the problem of cross-lingual text clustering by performing a series of experiments using data from the news domain in an online clustering setting.
 We build on previous work in cross-lingual clustering in the news domain~\cite{Schneider2023} by testing whether LLMs can provide value beyond traditional clustering by extracting key phrases and using them to determine which cluster a new article belongs in.
 Further, we introduce key metadata fields, including the time of publication and location associated with each article, to aid in clustering and measure how well LLMs are able to account for these pieces of information when deciding which cluster an article belongs in.
 We compare the cluster assignments several LLMs produce in a zero-shot setting against a more traditional online clustering method that uses machine translation followed by TF-IDF to cluster documents based on their content and time of publication.
@@ -24,7 +24,7 @@ Our results indicate that further work is needed before LLMs can be used to reli
 In addition to our findings, we provide a hand-labeled dataset of English articles and an unlabeled dataset of articles spanning multiple languages to enable future testing of newer LLMs and other prompting strategies and clustering methods on the task of cross-lingual clustering of long documents.
 
 The rest of this paper is organized as follows.
-In section \ref{section:data} we describe the news datasets that we create to evaluate single-language and cross-lingual clustering ability.
+In section \ref{section:data} we describe the news datasets that we create to evaluate mono-lingual and cross-lingual clustering ability.
 Then, we describe our experimental setup in section \ref{section:method}, and our results in section \ref{section:results}.
-Next, we discuss the significance of our findings in section \ref{section:discussion} and summarize related work in LLM and neural clustering in \ref{section:related_work}.
+Next, we discuss the significance of our findings in section \ref{section:discussion} and summarize related work in LLM and neural clustering in section \ref{section:related_work}.
 Finally, we discuss future work and conclude in section \ref{section:conclusion}.

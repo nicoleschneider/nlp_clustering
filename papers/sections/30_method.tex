@@ -13,7 +13,7 @@ This premise lends itself well to online clustering, which requires less computa
 
 To accomplish the clustering, NewsStand employs the vector space model \cite{salton}, a common approach in text mining and information retrieval. 
 If the articles are not originally written in English, they are first translated into English using machine translation.
-Then, the articles are converted to term feature vectors in d-dimensional space, where d is the number of distinct terms in every document in a corpus. 
+Then, the articles are converted to term feature vectors in $d$-dimensional space, where $d$ is the number of distinct terms in every document in a corpus. 
 The term feature vector is extracted using TF-IDF \cite{salton-buckley}. 
 Elements of the term feature vector represent the frequency of their corresponding term in the document being ingested, where terms that are common in a document but uncommon in the corpus are emphasized. 
 Emphasis is given to location entities and to terms that appear earlier in the article. 
@@ -30,13 +30,13 @@ Term distances are computed using the standard cosine similarity \cite{steinbach
 
 \subsection{LLM Clustering}
 
-This set of experiments is designed to test clustering ability of LLMs for news data.
+We compare the baseline clustering method to an LLM-based clustering method, where LLMs are directly prompted to cluster articles.
 On the English-only dataset, for which we have ground-truth cluster labels, we test several prompt variants to determine whether including article titles, timestamps, and geo-coordinates enable LLMs to achieve better clustering results compared to the baseline clustering method.
 The outcome of those experiments determine the prompts used to conduct clustering on the multi-lingual dataset, for which we do not have ground truth cluster labels.
 
-To achieve the online clustering effect through zero-shot LLM prompting, we provide an initial system prompt stating the task, and then a series of prompts containing individual articles that should be assigned to a cluster.
+To achieve the online clustering effect through zero-shot LLM prompting, we follow the LLM prompting strategy in \citeauthor{Schneider2024c}~\cite{Schneider2024c} and provide an initial system prompt stating the task, and then a series of prompts containing individual articles that should be assigned to a cluster.
 To retain the context of the previous articles that have already been assigned clusters, we prompt the LLMs to output both article ids and keywords associated with each cluster at each step, and these are fed into the subsequent prompt to accumulate the full clustering of all the articles over the course of each experiment.
-For experiments that include geo-coordinates and timestamps, we prompt the LLMs to maintain the average geo-coordinate and/or timestamp of the articles in each cluster.
+For experiments that include geo-coordinates and timestamps, we maintain the average geo-coordinate and/or timestamp of the articles in each cluster and also provide that to the LLM to enable location-based and time-based clustering.
 
 \subsubsection{Models}
 
@@ -133,29 +133,32 @@ The cluster assignments are recorded for each model under each of the two condit
 Do LLMs perform better at clustering when provided with the geo-coordinates associated with news articles? 
 
 \noindent To test this we compare the clustering results produced when the LLMs are given article text vs. article text and article geo-coordinates. 
-    
-\begin{lstlisting}[title=Prompt 5: Geo-coords Prompt]
+
+\begin{lstlisting}[title=Prompt 5: No Geo-coords Prompt]
+    id: {id number}
+
+    text: {text here}
+\end{lstlisting}
+
+\begin{lstlisting}[title=Prompt 6: Geo-coords Prompt]
     id: {id number}
     
     coordinates: {coords here}
 
     text: {text here}
     \end{lstlisting}
-    \begin{lstlisting}[title=Prompt 6: No Geo-coords Prompt]
-    id: {id number}
+    
 
-    text: {text here}
-\end{lstlisting}
 
 
 For \emph{E3}, we first give each LLM whichever of Prompts 1 and 2 were more successful in \emph{E1}, and adjust lines 3-5 of the initial system prompt to follow Prompt 5 or Prompt 6.
-We then appended to that prompt an additional sentence indicating that the geo-coordinates associated with each article would be provided (and the format it would appear in).
+In the case Prompt 6 is used, we also append an additional sentence indicating that the geo-coordinates associated with each article would be provided (and the format it would appear in).
 Then, we feed it articles from \emph{NewsStandEN} one at a time, in one of the two formats specified in Prompts 5 and 6. 
 With Prompt 5, only the article text is provided to aid with clustering.
 With Prompt 6, the article's associated geo-coordinates are also provided in addition to the article text.
 % Along with each article the output of the previous interaction is provided as the context history, to maintain the cluster assignments made previously.
 Along with each article, the cluster dictionary produced by the previous interaction is provided as context history, which includes the cluster IDs as keys, the article IDs associated with each cluster, and the keywords associated with each cluster.
-For experiments using prompt 5, we additionally compute the average geo-coordinate of each cluster after each response of the model, and include it along with the articles assigned to that cluster.
+For experiments using prompt 6, we additionally compute the average geo-coordinate of each cluster after each response of the model, and include it along with the articles assigned to that cluster.
 The final cluster assignments are recorded for each model under each of the two conditions.
 
 
@@ -164,27 +167,29 @@ Do LLMs perform better at clustering when provided with time of publication of n
 
 \noindent To test this we compare the clustering results produced when the LLMs are given article text vs. article text and article publication timestamp. 
 
-\begin{lstlisting}[title=Prompt 7: Timestamp Prompt]
+
+\begin{lstlisting}[title=Prompt 7: No Timestamp Prompt]
+    id: {id number}
+
+    text: {text here}
+\end{lstlisting}
+
+\begin{lstlisting}[title=Prompt 8: Timestamp Prompt]
     id: {id number}
     
     timestamp: {timestamp here}
 
     text: {text here}
 \end{lstlisting}
-\begin{lstlisting}[title=Prompt 8: No Timestamp Prompt]
-    id: {id number}
-
-    text: {text here}
-\end{lstlisting}
 
 For \emph{E4}, we first give each LLM whichever of Prompts 1 and 2 were more successful in \emph{E1}, and adjust lines 3-5 of the initial system prompt to follow Prompt 7 or Prompt 8.
-We then appended to that prompt an additional sentence indicating that the timestamp associated with each article would be provided (and the format it would appear in).
+In the case Prompt 8 is used, we also append an additional sentence indicating that the timestamp associated with each article would be provided (and the format it would appear in).
 Then, we feed it articles from \emph{NewsStandEN} one at a time, in one of the two formats specified in Prompts 7 and 8. 
 With Prompt 7, only the article text is provided to aid with clustering.
 With Prompt 8, the article's associated publication timestamp is also provided in addition to the article text.
 % Along with each article the output of the previous interaction is provided as the context history, to maintain the cluster assignments made previously.
 Along with each article, the cluster dictionary produced by the previous interaction is provided as context history, which includes the cluster IDs as keys, the article IDs associated with each cluster, and the keywords associated with each cluster.
-Fpr experiments using prompt 5, we additionally compute the average timestamp after each response of the model, and include it along with the articles assigned to that cluster.
+For experiments using Prompt 8, we additionally compute the average timestamp after each response of the model, and include it along with the articles assigned to that cluster.
 The final cluster assignments are recorded for each model under each of the two conditions.
 
 
@@ -231,7 +236,32 @@ The final cluster assignments are recorded for each model under each of the two 
 \subsubsection{Measurements}
 We begin with the single-language setting, using the \emph{NewsStandEN} dataset.
 We record the baseline cluster label assignments from the NewsStand system and record the LLM performances for Prompts 1-8.
-For these experiments we record the cluster labels assigned to each article by each method or model and using those assignments, we compute the \ac{NMI} between the recorded cluster assignment and the ground truth labels.
+For these experiments we record the cluster labels assigned to each article by each method or model and using those assignments, we compute the \ac{NMI} between the recorded cluster assignment, $U = \{U_1, ..., U_p\}$, and the ground truth cluster assignment, $V = \{V_1, ..., V_q\}$, of the $N$ data points as follows~\cite{vinh10a}.
+%
+The normalized mutual information, $NMI(U,V)$, is defined as
+\begin{equation}\label{eq:rwd-func}
+\begin{split}
+    NMI(U, V) = \frac{MI(U, V)}{H(U) + H(V)}
+\end{split}
+\end{equation}
+
+\noindent where mutual information, $MI(U,V)$, is
+\begin{equation}
+    MI(U, V) = \sum\limits_{i=1}^p\sum\limits_{j=1}^q \frac{n_{ij}}{N}\log\left(\frac{n_{ij}/N}{\lvert U_i \rvert \lvert V_j \rvert / N^2}\right).
+\end{equation}
+\noindent for $n_{ij} = \lvert U_i \cap V_j \rvert$ for $1 \leq i \leq p$ and $1 \leq j \leq q$ and where the entropy $H$ of a cluster assignment $Z = \{Z_1, ..., Z_k\}$ is
+\begin{equation}
+    \begin{split}
+        H(Z) = -\sum\limits_{i=1}^{k} \frac{\lvert Z_i \rvert}{N}\log \frac{\lvert Z_i \rvert}{N}.
+    \end{split}
+\end{equation}
+
+
+\ac{NMI} is a measure of how much information is shared between two distributions~\cite{Strehl2002}. 
+In our context, an \ac{NMI} of 1.0 means that the recorded clustering matches exactly the clustering in the reference dataset and an \ac{NMI} of 0.0 means the two clustering assignments are independent. 
+%
+We elect to use \ac{NMI} as the measure of clustering success as opposed to alternative measurements like B-Cubed~\cite{bagga1998entity} since \ac{NMI} does not reward grouping outliers into one cluster.
+In the news event clustering setting, outliers should each be given their own new cluster, or should be grouped into the nearest related cluster, but should not be all grouped together into an `outlier' cluster, which would not correspond to any coherent news event.
 
 For the cross-lingual setting, we record the baseline cluster label assignments of the \emph{NewsStandMULTI} dataset using the NewsStand system.
 Based on the LLM results from the single-language setting, we select the best performing initial system prompt and metadata settings (with or without title, geo-coordinates, and timestamp) to use in the subsequent cross-lingual LLM experiments.
